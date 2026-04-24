@@ -1,28 +1,46 @@
 import React from 'react';
-import styles from './Button.module.css';
+import s from './Button.module.css';
 
-export const Button = ({ 
-  children, 
-  variant = 'primary', 
-  onClick, 
-  disabled = false, 
+/**
+ * Button component
+ * @param {'primary'|'secondary'|'success'|'danger'|'ghost'|'warning'} variant
+ * @param {'sm'|'md'|'lg'} size
+ * @param {boolean} loading
+ * @param {boolean} fullWidth - if true, width: 100%
+ */
+const Button = ({
+  children,
+  variant = 'primary',
+  size = 'md',
+  loading = false,
+  disabled = false,
+  fullWidth = true,
   type = 'button',
-  iconOnly = false,
-  className = ''
+  onClick,
+  className = '',
+  ...rest
 }) => {
-  const baseClass = styles.btn;
-  const variantClass = styles[variant];
-  const disabledClass = disabled ? styles.disabled : '';
-  const iconClass = iconOnly ? styles.iconOnly : '';
-
   return (
-    <button 
+    <button
       type={type}
-      className={`${baseClass} ${variantClass} ${disabledClass} ${iconClass} ${className}`}
+      className={[
+        s.btn,
+        s[`btn-${variant}`],
+        s[`btn-${size}`],
+        !fullWidth && s['btn-auto'],
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      disabled={disabled || loading}
       onClick={onClick}
-      disabled={disabled}
+      style={!fullWidth ? { width: 'auto' } : undefined}
+      {...rest}
     >
+      {loading && <span className={s['btn-spinner']} />}
       {children}
     </button>
   );
 };
+
+export default Button;

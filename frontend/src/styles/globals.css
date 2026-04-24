@@ -1,66 +1,267 @@
-/* src/styles/globals.css */
+/* ============================================
+   CLINIC QUEUE SYSTEM — GLOBAL STYLES
+   ============================================ */
 @import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap');
 
-* {
+/* --- Reset --- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* --- Base --- */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  font-family: var(--font-family-base);
+  font-family: var(--font-family);
   font-size: var(--font-size-base);
-  color: var(--color-text-main);
-  background-color: var(--color-background);
-  line-height: 1.5;
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+  line-height: var(--line-height-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
 }
 
 a {
-  color: var(--color-primary);
+  color: inherit;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-input, textarea, select {
+button,
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-bottom: var(--spacing-md);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.2;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-h1 { font-size: var(--font-size-xxl); }
-h2 { font-size: var(--font-size-xl); }
-h3 { font-size: var(--font-size-lg); }
+/* --- Layout Wrappers --- */
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
 
-/* Layout utilities */
-.container {
+.page-container {
   width: 100%;
-  max-width: 600px; /* Mobile-first container max width */
+  max-width: var(--max-width-app);
   margin: 0 auto;
-  padding: var(--spacing-md);
+  padding: var(--space-4);
+  padding-bottom: var(--space-16);
+  flex: 1;
 }
 
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-muted); }
-.text-danger { color: var(--color-danger); }
-.text-success { color: var(--color-success); }
-.text-primary { color: var(--color-primary); }
+.page-container--wide {
+  max-width: var(--max-width-desktop);
+}
 
-.mb-md { margin-bottom: var(--spacing-md); }
-.mb-lg { margin-bottom: var(--spacing-lg); }
-.mt-md { margin-top: var(--spacing-md); }
-.mt-lg { margin-top: var(--spacing-lg); }
+/* --- Typography Helpers --- */
+.text-xs     { font-size: var(--font-size-xs); }
+.text-sm     { font-size: var(--font-size-sm); }
+.text-base   { font-size: var(--font-size-base); }
+.text-md     { font-size: var(--font-size-md); }
+.text-lg     { font-size: var(--font-size-lg); }
+.text-xl     { font-size: var(--font-size-xl); }
+.text-2xl    { font-size: var(--font-size-2xl); }
+
+.font-medium   { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold     { font-weight: var(--font-weight-bold); }
+
+.text-primary   { color: var(--clr-primary); }
+.text-secondary { color: var(--clr-text-secondary); }
+.text-muted     { color: var(--clr-text-muted); }
+.text-success   { color: var(--clr-success); }
+.text-danger    { color: var(--clr-danger); }
+.text-warning   { color: var(--clr-warning); }
+.text-center    { text-align: center; }
+.text-start     { text-align: start; }
+.text-end       { text-align: end; }
+
+/* --- Spacing Helpers --- */
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+
+/* --- Flex & Grid Helpers --- */
+.flex          { display: flex; }
+.flex-col      { flex-direction: column; }
+.items-center  { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center  { justify-content: center; }
+.gap-2         { gap: var(--space-2); }
+.gap-3         { gap: var(--space-3); }
+.gap-4         { gap: var(--space-4); }
+.gap-6         { gap: var(--space-6); }
+.w-full        { width: 100%; }
+
+/* --- Divider --- */
+.divider {
+  height: 1px;
+  background: var(--clr-border);
+  margin: var(--space-4) 0;
+}
+
+/* --- Page Header --- */
+.page-header {
+  padding: var(--space-6) 0 var(--space-4);
+}
+
+.page-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-1);
+}
+
+.page-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-muted);
+}
+
+/* --- Badge --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+.badge-success  { background: var(--clr-success-bg);  color: var(--clr-success); }
+.badge-danger   { background: var(--clr-danger-bg);   color: var(--clr-danger); }
+.badge-warning  { background: var(--clr-warning-bg);  color: var(--clr-warning); }
+.badge-info     { background: var(--clr-info-bg);     color: var(--clr-info); }
+.badge-primary  { background: var(--clr-primary-light); color: var(--clr-primary-dark); }
+
+/* --- Status Dot --- */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  flex-shrink: 0;
+}
+.status-dot--green { background-color: var(--clr-success); }
+.status-dot--red   { background-color: var(--clr-danger); }
+
+/* --- Loading Spinner --- */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--clr-border);
+  border-top-color: var(--clr-primary);
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+  margin: var(--space-8) auto;
+}
+
+.loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: var(--clr-text-muted);
+}
+
+/* --- Error/Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+  color: var(--clr-text-muted);
+}
+
+.empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+}
+
+.empty-state__text {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--clr-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Fade in on page load */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes numberChange {
+  0%   { transform: scale(1);    opacity: 1; }
+  40%  { transform: scale(1.18); opacity: 0.7; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26,110,181,0.3); }
+  50%       { box-shadow: 0 0 0 12px rgba(26,110,181,0); }
+}
+
+/* Utility animation classes */
+.animate-fade-in     { animation: fadeIn 0.4s ease both; }
+.animate-fade-scale  { animation: fadeInScale 0.3s ease both; }
+.animate-slide-up    { animation: slideInUp 0.4s ease both; }
+.animate-pulse       { animation: pulse 2s ease-in-out infinite; }
+
+/* Staggered children */
+.stagger > * { animation: fadeIn 0.4s ease both; }
+.stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+.stagger > *:nth-child(2)  { animation-delay: 0.10s; }
+.stagger > *:nth-child(3)  { animation-delay: 0.15s; }
+.stagger > *:nth-child(4)  { animation-delay: 0.20s; }
+.stagger > *:nth-child(5)  { animation-delay: 0.25s; }
+.stagger > *:nth-child(6)  { animation-delay: 0.30s; }

@@ -1,54 +1,98 @@
 .formGroup {
-  margin-bottom: var(--spacing-lg);
   display: flex;
   flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 
 .label {
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--spacing-sm);
-  color: var(--color-text-main);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--clr-text-secondary);
 }
 
-.input {
-  padding: var(--spacing-md);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
-  transition: border-color 0.2s, box-shadow 0.2s;
+.input,
+.select {
   width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  color: var(--clr-text);
+  background: var(--clr-surface);
+  transition: var(--trans-fast);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+.input::placeholder {
+  color: var(--clr-text-muted);
+}
+
+.input:focus,
+.select:focus {
+  border-color: var(--clr-primary);
+  box-shadow: var(--shadow-focus);
 }
 
 .inputError {
-  border-color: var(--color-danger);
+  border-color: var(--clr-danger);
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(217, 48, 62, 0.2);
 }
 
 .errorText {
-  color: var(--color-danger);
-  font-size: 0.875rem;
-  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--clr-danger);
+  font-weight: var(--font-weight-medium);
 }
 
-.checkboxGroup {
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-sm);
+/* Segment control for booking type */
+.segmentGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
 }
 
-.checkboxInput {
-  width: 24px;
-  height: 24px;
+.segmentBtn {
+  padding: var(--space-4);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  background: var(--clr-surface);
   cursor: pointer;
+  text-align: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  transition: var(--trans-fast);
+  font-family: var(--font-family);
+  color: var(--clr-text-secondary);
 }
 
-.checkboxLabel {
-  margin-bottom: 0;
-  cursor: pointer;
+.segmentBtn:hover {
+  border-color: var(--clr-primary);
+  background: var(--clr-primary-light);
+  color: var(--clr-primary);
+}
+
+.segmentBtnActive {
+  border-color: var(--clr-primary);
+  background: var(--clr-primary);
+  color: white;
+  font-weight: var(--font-weight-bold);
+}
+
+.segmentLabel {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.segmentPrice {
+  display: block;
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-1);
+  opacity: 0.85;
 }

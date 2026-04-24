@@ -1,0 +1,166 @@
+.card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: var(--trans-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--clr-primary);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: var(--trans-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--clr-primary);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:active {
+  transform: translateY(0);
+}
+
+/* Unavailable state */
+.card-unavailable {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.card-unavailable:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+  border-color: var(--clr-border);
+}
+
+.card-unavailable::before {
+  background-color: var(--clr-danger);
+}
+
+/* ── Top row ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--clr-primary-light), var(--clr-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  color: white;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text);
+  margin-bottom: var(--space-1);
+  line-height: var(--line-height-tight);
+}
+
+.specialty {
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-secondary);
+}
+
+/* ── Prices row ── */
+.prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.priceItem {
+  background: var(--clr-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.priceLabel {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--clr-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.priceValue {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-primary);
+}
+
+/* ── Bottom row ── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.bookBtn {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--clr-primary);
+  color: white;
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: var(--trans-fast);
+  text-align: center;
+}
+
+.bookBtn:hover {
+  background-color: var(--clr-primary-dark);
+}
+
+.bookBtn:active {
+  transform: scale(0.97);
+}
+
+.bookBtn-disabled {
+  background-color: var(--clr-border-strong);
+  cursor: not-allowed;
+  color: var(--clr-text-muted);
+}
+
+.bookBtn-disabled:hover {
+  background-color: var(--clr-border-strong);
+}

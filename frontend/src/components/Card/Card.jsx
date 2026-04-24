@@ -1,15 +1,16 @@
 import React from 'react';
-import styles from './Card.module.css';
+import s from './Card.module.css';
 
-export const Card = ({ children, onClick, className = '' }) => {
-  const interactiveClass = onClick ? styles.interactive : '';
-  
-  return (
-    <div 
-      className={`${styles.card} ${interactiveClass} ${className}`} 
-      onClick={onClick}
-    >
-      {children}
-    </div>
-  );
-};
+const Card = ({ children, interactive = false, padded = true, className = '', onClick, style }) => (
+  <div
+    className={[s.card, padded && s['card-padded'], interactive && s['card-interactive'], className]
+      .filter(Boolean)
+      .join(' ')}
+    onClick={onClick}
+    style={style}
+  >
+    {children}
+  </div>
+);
+
+export default Card;

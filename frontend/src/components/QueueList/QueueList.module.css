@@ -1,0 +1,114 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ticket {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xs);
+  transition: var(--trans-fast);
+  animation: slideInUp 0.3s ease both;
+}
+
+.ticketServing {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 2px var(--clr-primary-light), var(--shadow-sm);
+  background: linear-gradient(135deg, #fff 80%, var(--clr-primary-light));
+}
+
+.ticketHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.number {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--clr-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-black);
+  flex-shrink: 0;
+}
+
+.numberServing {
+  background: var(--clr-success);
+  animation: glowPulse 2s ease infinite;
+}
+
+.patientInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.patientName {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--clr-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patientMeta {
+  font-size: var(--font-size-xs);
+  color: var(--clr-text-muted);
+  margin-top: var(--space-1);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.action {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--trans-fast);
+  white-space: nowrap;
+}
+
+.actionDone {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+}
+.actionDone:hover { background: var(--clr-success); color: white; }
+
+.actionNoShow {
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning);
+}
+.actionNoShow:hover { background: var(--clr-warning); color: white; }
+
+.actionCancel {
+  background: var(--clr-danger-bg);
+  color: var(--clr-danger);
+}
+.actionCancel:hover { background: var(--clr-danger); color: white; }
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26,110,181,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(26,110,181,0); }
+}
