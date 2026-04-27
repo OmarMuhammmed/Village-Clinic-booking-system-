@@ -322,6 +322,9 @@ export const api = {
     const queue = getQueue(doctorId);
     const doneToday = queue.tickets.filter((t) => t.status === 'done').length;
     const totalToday = queue.tickets.length;
+    const noShowToday = queue.tickets.filter((t) => t.status === 'noshow').length;
+    const cancelledToday = queue.tickets.filter((t) => t.status === 'cancelled').length;
+    const waiting = queue.tickets.filter((t) => t.status === 'waiting').length;
 
     return {
       daily: {
@@ -337,7 +340,12 @@ export const api = {
       patients: {
         doneToday,
         totalToday,
-        waiting: queue.tickets.filter((t) => t.status === 'waiting').length,
+        waiting,
+        noShowToday,
+        cancelledToday,
+        cancellationRate: totalToday > 0 ? ((cancelledToday / totalToday) * 100).toFixed(1) : '0',
+        averageWaitTime: waiting > 0 ? waiting * 5 : doneToday > 0 ? 8 : 0,
+        completionPercentage: totalToday > 0 ? Math.round((doneToday / totalToday) * 100) : 0,
       },
     };
   },

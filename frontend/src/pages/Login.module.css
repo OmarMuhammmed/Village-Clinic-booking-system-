@@ -1,0 +1,114 @@
+.wrapper {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: linear-gradient(135deg, var(--clr-bg) 0%, #dce6f2 100%);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--clr-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-10) var(--space-8);
+  animation: fadeInScale 0.4s ease both;
+}
+
+.branding {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.iconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--clr-primary);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  box-shadow: 0 4px 20px rgba(26, 110, 181, 0.3);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text);
+  margin-bottom: var(--space-1);
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-muted);
+}
+
+.errorBanner {
+  background: var(--clr-danger-bg);
+  color: var(--clr-danger);
+  border: 1px solid var(--clr-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-5);
+  text-align: center;
+  animation: fadeIn 0.3s ease both;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: var(--space-4);
+  transform: translateY(-50%);
+  color: var(--clr-text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.inputWithIcon {
+  padding-inline-start: calc(var(--space-4) + 24px) !important;
+}
+
+.footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--clr-border);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-muted);
+  transition: var(--trans-fast);
+}
+
+.backLink:hover {
+  color: var(--clr-primary);
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

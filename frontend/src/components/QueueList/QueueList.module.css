@@ -1,3 +1,58 @@
+/* ── Filters ── */
+.filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  transition: var(--trans-fast);
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
+
+.filterActive {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: white;
+}
+
+.filterCount {
+  font-size: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.08);
+  font-weight: var(--font-weight-bold);
+}
+
+.filterActive .filterCount {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── List ── */
 .list {
   display: flex;
   flex-direction: column;
@@ -14,29 +69,40 @@
   animation: slideInUp 0.3s ease both;
 }
 
-.ticketServing {
+.serving {
   border-color: var(--clr-primary);
   box-shadow: 0 0 0 2px var(--clr-primary-light), var(--shadow-sm);
   background: linear-gradient(135deg, #fff 80%, var(--clr-primary-light));
+  border-inline-start: 4px solid var(--clr-primary);
+}
+
+.done {
+  border-inline-start: 4px solid var(--clr-success);
+  opacity: 0.7;
+  background: var(--clr-success-bg);
+}
+
+.inactive {
+  border-inline-start: 4px solid var(--clr-danger);
+  opacity: 0.5;
 }
 
 .ticketHeader {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-bottom: var(--space-3);
 }
 
 .number {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-md);
   background: var(--clr-primary);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-black);
   flex-shrink: 0;
 }
@@ -55,17 +121,66 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   color: var(--clr-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.servingBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--clr-success);
+  background: var(--clr-success-bg);
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
 }
 
 .patientMeta {
   font-size: var(--font-size-xs);
   color: var(--clr-text-muted);
   margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
 }
 
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--clr-text-muted);
+  margin: 0 2px;
+}
+
+.statusTag {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  margin-inline-start: var(--space-2);
+}
+
+.statusTag[data-status="done"] {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+}
+
+.statusTag[data-status="cancelled"] {
+  background: var(--clr-danger-bg);
+  color: var(--clr-danger);
+}
+
+.statusTag[data-status="noshow"] {
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning);
+}
+
+/* ── Actions ── */
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -74,6 +189,10 @@
 }
 
 .action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   border: none;
@@ -97,11 +216,47 @@
 }
 .actionNoShow:hover { background: var(--clr-warning); color: white; }
 
-.actionCancel {
+.actionCancelBtn {
   background: var(--clr-danger-bg);
   color: var(--clr-danger);
 }
-.actionCancel:hover { background: var(--clr-danger); color: white; }
+.actionCancelBtn:hover { background: var(--clr-danger); color: white; }
+
+/* ── Confirm Row ── */
+.confirmRow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.confirmText {
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.actionConfirm {
+  background: var(--clr-danger);
+  color: white;
+}
+
+.actionCancel {
+  background: var(--clr-bg);
+  color: var(--clr-text-secondary);
+}
+
+/* ── Empty State ── */
+.empty {
+  text-align: center;
+  padding: var(--space-10) var(--space-4);
+  color: var(--clr-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
 
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -111,4 +266,14 @@
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(26,110,181,0.4); }
   50%       { box-shadow: 0 0 0 8px rgba(26,110,181,0); }
+}
+
+@media (max-width: 480px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    gap: var(--space-1);
+  }
 }

@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap");
+
+.page {
+  font-family: "Cairo", system-ui, sans-serif;
+  min-height: 100vh;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.inner {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Status banner ── */
+.statusBanner {
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  animation: fadeUp 0.4s ease both;
+}
+
+.statusSub {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* ── Ticket hero ── */
+.ticketHero {
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.4s ease 0.05s both;
+}
+
+.ticketHero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.ticketLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  margin-bottom: 0.75rem;
+}
+
+.ticketNumber {
+  font-size: clamp(4.5rem, 18vw, 6rem);
+  font-weight: 900;
+  line-height: 1;
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.ticketNumberAnim {
+  transform: scale(1.2);
+  opacity: 0.6;
+}
+
+.ticketMeta {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+/* ── Queue stats row ── */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  animation: fadeUp 0.4s ease 0.1s both;
+}
+
+.statBox {
+  background: #fff;
+  border: 1px solid #e3e8ef;
+  border-radius: 1rem;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(28, 37, 51, 0.05);
+}
+
+.statBoxLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #8e9eb5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.375rem;
+}
+
+.statBoxValue {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--clr-text);
+  line-height: 1;
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.statBoxValueAnim {
+  transform: scale(1.2);
+  opacity: 0.6;
+}
+
+.statBoxUnit {
+  font-size: 0.75rem;
+  color: #8e9eb5;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ── Refresh note ── */
+.refreshNote {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #8e9eb5;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  animation: fadeUp 0.4s ease 0.15s both;
+}
+
+.refreshDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--clr-success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Loading ── */
+.loadingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  font-family: "Cairo", sans-serif;
+  background: #f8fafc;
+}
+
+.loadingRing {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e3e8ef;
+  border-top-color: var(--clr-primary);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+.loadingText {
+  font-size: 0.9375rem;
+  color: #8e9eb5;
+  font-weight: 600;
+}
+
+/* ── Animations ── */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 8px 30px rgba(26, 110, 181, 0.25);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(26, 110, 181, 0.45);
+  }
+}

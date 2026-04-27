@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
-import Button from '../components/Button/Button';
-import Input, { FormGroup, SegmentControl } from '../components/Input/Input';
-import Card from '../components/Card/Card';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { api } from "../services/api";
+import s from "./PatientBooking.module.css";
+
+const VISIT_TYPES = [
+  { key: "kashf", label: "كشف", icon: "🩺" },
+  { key: "istishara", label: "استشارة", icon: "💬" },
+];
 
 const PatientBooking = () => {
   const { doctorId } = useParams();
@@ -12,11 +15,10 @@ const PatientBooking = () => {
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
-
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [type, setType] = useState('kashf');
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [type, setType] = useState("kashf");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -28,24 +30,31 @@ const PatientBooking = () => {
 
   const validate = () => {
     const e = {};
-    if (!name.trim())             e.name  = 'الاسم مطلوب';
-    if (!phone.trim())            e.phone = 'رقم الهاتف مطلوب';
-    else if (phone.replace(/\D/g,'').length < 10) e.phone = 'رقم الهاتف غير صحيح';
+    if (!name.trim()) e.name = "الاسم مطلوب";
+    if (!phone.trim()) e.phone = "رقم الهاتف مطلوب";
+    else if (phone.replace(/\D/g, "").length < 10)
+      e.phone = "رقم الهاتف غير صحيح";
     return e;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validErrors = validate();
-    if (Object.keys(validErrors).length) { setErrors(validErrors); return; }
-
+    if (Object.keys(validErrors).length) {
+      setErrors(validErrors);
+      return;
+    }
     setSubmitting(true);
-    setError('');
+    setError("");
     try {
-      const ticket = await api.bookTicket(doctorId, { name: name.trim(), phone: phone.trim(), type });
+      const ticket = await api.bookTicket(doctorId, {
+        name: name.trim(),
+        phone: phone.trim(),
+        type,
+      });
       navigate(`/ticket/${ticket.id}`, { state: { ticket, doctor } });
     } catch (err) {
-      setError(err.message || 'حدث خطأ أثناء الحجز');
+      setError(err.message || "حدث خطأ أثناء الحجز");
     } finally {
       setSubmitting(false);
     }
@@ -53,153 +62,189 @@ const PatientBooking = () => {
 
   if (loading) {
     return (
-      <div className="loading-page animate-fade-in">
-        <div className="spinner" />
+      <div className={s.loadingPage}>
+        <div className={s.loadingRing} />
+        <p
+          style={{
+            color: "#8e9eb5",
+            fontFamily: "Cairo, sans-serif",
+            fontWeight: 600,
+          }}>
+          جاري التحميل...
+        </p>
       </div>
     );
   }
 
   if (!doctor) {
     return (
-      <div className="empty-state animate-fade-in">
-        <div className="empty-state__icon">❌</div>
-        <div className="empty-state__text">الطبيب غير موجود</div>
-        <Button onClick={() => navigate('/')} fullWidth={false} size="sm" variant="secondary">
-          العودة للرئيسية
-        </Button>
+      <div className={s.loadingPage}>
+        <p
+          style={{
+            color: "#d9303e",
+            fontFamily: "Cairo, sans-serif",
+            fontWeight: 700,
+          }}>
+          الطبيب غير موجود
+        </p>
+        <button className={s.back} onClick={() => navigate("/")}>
+          ← العودة للرئيسية
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="animate-fade-in">
-      {/* Back */}
-      <button
-        onClick={() => navigate('/')}
-        style={{
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          color: 'var(--clr-text-secondary)',
-          padding: 'var(--space-4) 0',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-2)',
-          fontSize: 'var(--font-size-base)',
-        }}
-      >
-        ← رجوع
+    <div className={s.page} dir="rtl">
+      <button className={s.back} onClick={() => navigate("/")}>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5">
+          <path d="M19 12H5M12 5l7 7-7 7" />
+        </svg>
+        العودة للرئيسية
       </button>
 
-      {/* Doctor summary */}
-      <Card style={{ marginBottom: 'var(--space-5)' }}>
-        <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--clr-primary-light), var(--clr-primary))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              flexShrink: 0,
-            }}
-          >
-            {doctor.avatarInitials}
+      <div className={s.card}>
+        {/* ── Doctor header ── */}
+        <div className={s.docHeader}>
+          <div className={s.docAvatar}>{doctor.avatarInitials}</div>
+          <div className={s.docInfo}>
+            <div className={s.docName}>{doctor.name}</div>
+            <div className={s.docSpec}>{doctor.specialty}</div>
           </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 'var(--font-size-md)' }}>{doctor.name}</div>
-            <div style={{ color: 'var(--clr-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
-              {doctor.specialty}
-            </div>
-          </div>
+          <span className={s.docBadge}>
+            <span className={s.docBadgeDot} />
+            متاح
+          </span>
         </div>
-      </Card>
 
-      {/* Form */}
-      <Card>
-        <h2
-          style={{
-            fontSize: 'var(--font-size-lg)',
-            fontWeight: 700,
-            marginBottom: 'var(--space-5)',
-            color: 'var(--clr-text)',
-          }}
-        >
-          📋 بيانات الحجز
-        </h2>
-
-        {error && (
-          <div
-            style={{
-              background: 'var(--clr-danger-bg)',
-              color: 'var(--clr-danger)',
-              borderRadius: 'var(--radius-md)',
-              padding: 'var(--space-3) var(--space-4)',
-              marginBottom: 'var(--space-4)',
-              fontWeight: 600,
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <FormGroup label="اسم المريض" htmlFor="patient-name" error={errors.name}>
-            <Input
-              id="patient-name"
-              placeholder="أدخل الاسم الكامل"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              error={errors.name}
-            />
-          </FormGroup>
-
-          <FormGroup label="رقم الهاتف" htmlFor="patient-phone" error={errors.phone}>
-            <Input
-              id="patient-phone"
-              type="tel"
-              placeholder="01xxxxxxxxx"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              error={errors.phone}
-              inputMode="numeric"
-            />
-          </FormGroup>
-
-          <FormGroup label="نوع الزيارة">
-            <SegmentControl value={type} onChange={setType} prices={doctor.prices} />
-          </FormGroup>
-
-          {/* Price preview */}
-          <div
-            style={{
-              background: 'var(--clr-primary-light)',
-              borderRadius: 'var(--radius-md)',
-              padding: 'var(--space-4)',
-              marginBottom: 'var(--space-5)',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ color: 'var(--clr-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
-              رسوم الزيارة
-            </span>
-            <span style={{ fontWeight: 900, fontSize: 'var(--font-size-xl)', color: 'var(--clr-primary)' }}>
-              {doctor.prices[type]} ج
-            </span>
+        {/* ── Form ── */}
+        <div className={s.formBody}>
+          <div className={s.formTitle}>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--clr-primary)"
+              strokeWidth="2">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
+            </svg>
+            بيانات الحجز
           </div>
 
-          <Button type="submit" size="lg" loading={submitting}>
-            تأكيد الحجز واستلام التذكرة
-          </Button>
-        </form>
-      </Card>
+          {error && (
+            <div className={s.errorBanner}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            {/* Name */}
+            <div className={s.field}>
+              <label className={s.label} htmlFor="patient-name">
+                اسم المريض
+              </label>
+              <input
+                id="patient-name"
+                className={`${s.input} ${errors.name ? s.inputError : ""}`}
+                placeholder="أدخل الاسم الكامل"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrors((p) => ({ ...p, name: "" }));
+                }}
+              />
+              {errors.name && (
+                <span className={s.fieldError}>{errors.name}</span>
+              )}
+            </div>
+
+            {/* Phone */}
+            <div className={s.field}>
+              <label className={s.label} htmlFor="patient-phone">
+                رقم الهاتف
+              </label>
+              <input
+                id="patient-phone"
+                type="tel"
+                inputMode="numeric"
+                className={`${s.input} ${errors.phone ? s.inputError : ""}`}
+                placeholder="01xxxxxxxxx"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setErrors((p) => ({ ...p, phone: "" }));
+                }}
+              />
+              {errors.phone && (
+                <span className={s.fieldError}>{errors.phone}</span>
+              )}
+            </div>
+
+            {/* Visit type */}
+            <div className={s.field}>
+              <label className={s.label}>نوع الزيارة</label>
+              <div className={s.typeGrid}>
+                {VISIT_TYPES.map((opt) => (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    className={`${s.typeBtn} ${type === opt.key ? s.typeBtnActive : ""}`}
+                    onClick={() => setType(opt.key)}>
+                    <span className={s.typeBtnIcon}>{opt.icon}</span>
+                    <span className={s.typeBtnLabel}>{opt.label}</span>
+                    <span className={s.typeBtnPrice}>
+                      {doctor.prices[opt.key]} جنيه
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Price summary */}
+            <div className={s.priceSummary}>
+              <span className={s.priceLabel}>رسوم الزيارة</span>
+              <span className={s.priceValue}>
+                {doctor.prices[type]} <small>ج</small>
+              </span>
+            </div>
+
+            <button type="submit" className={s.submitBtn} disabled={submitting}>
+              {submitting ? (
+                <span className={s.spinner} />
+              ) : (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              )}
+              {submitting ? "جاري الحجز..." : "تأكيد الحجز واستلام التذكرة"}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,142 @@
+.shell {
+  display: flex;
+  min-height: 100dvh;
+  background: var(--clr-bg);
+}
+
+.main {
+  flex: 1;
+  margin-inline-start: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-6);
+  max-width: var(--max-width-dashboard);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ── Section header ── */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Add walk-in button ── */
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--clr-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 8px var(--space-4);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: var(--trans-fast);
+  box-shadow: 0 2px 8px rgba(26, 110, 181, 0.25);
+}
+
+.addBtn:hover {
+  background: var(--clr-primary-dark);
+  box-shadow: 0 4px 14px rgba(26, 110, 181, 0.35);
+}
+
+/* ── Section card wrapper ── */
+.sectionCard {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── Stats groups ── */
+.statsGroup {
+  margin-bottom: var(--space-5);
+}
+
+.statsGroup:last-child {
+  margin-bottom: 0;
+}
+
+.statsGroupLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+/* 4-column row for revenue */
+.statsRow4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* 3-column row for patients */
+.statsRow3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1023px) {
+  .main {
+    margin-inline-start: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .statsRow4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .statsRow3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .statsRow4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .statsRow3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}

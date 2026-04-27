@@ -82,5 +82,10 @@
   /* --- Layout --- */
   --max-width-app:     480px;
   --max-width-desktop: 900px;
+  --max-width-dashboard: 1100px;
+  --sidebar-width:     260px;
   --header-height:     64px;
+
+  /* --- Sidebar --- */
+  --clr-sidebar-bg:    #1c2533;
 }

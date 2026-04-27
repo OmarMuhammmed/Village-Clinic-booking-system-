@@ -1,0 +1,662 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ── Base ── */
+.page {
+  font-family: "Cairo", system-ui, sans-serif;
+  background: #f8fafc;
+  min-height: 100vh;
+  color: #1c2533;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid #e8edf3;
+}
+
+.navInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #1a6eb5;
+}
+
+.navLogo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #1a6eb5, #0f9d82);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.navLogin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.125rem;
+  border: 1.5px solid #d1dae6;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #5a6a80;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.navLogin:hover {
+  border-color: #1a6eb5;
+  color: #1a6eb5;
+  background: #e8f1fb;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 1.5rem 6rem;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orb1 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -150px;
+  background: radial-gradient(
+    circle,
+    rgba(26, 110, 181, 0.12) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+
+.orb2 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -200px;
+  left: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(15, 157, 130, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(26, 110, 181, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 110, 181, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: #e8f1fb;
+  border: 1px solid #c5d9f0;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1a6eb5;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.5s ease both;
+}
+
+.badgeDot {
+  width: 8px;
+  height: 8px;
+  background: #22a06b;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.heroTitle {
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #1c2533;
+  margin-bottom: 1rem;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+
+.heroAccent {
+  background: linear-gradient(135deg, #1a6eb5, #0f9d82);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSub {
+  font-size: 1.0625rem;
+  color: #5a6a80;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.heroActions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #1a6eb5, #0f9d82);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(26, 110, 181, 0.3);
+  font-family: inherit;
+}
+
+.ctaPrimary svg {
+  transform: rotate(180deg);
+  transition: transform 0.25s ease;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(26, 110, 181, 0.38);
+}
+
+.ctaPrimary:hover svg {
+  transform: rotate(180deg) translateX(3px);
+}
+
+/* ── Stats ── */
+.statsRow {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+  max-width: 600px;
+  margin: -2rem auto 0;
+  position: relative;
+  z-index: 2;
+  background: #e3e8ef;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(28, 37, 51, 0.08);
+}
+
+.statCard {
+  flex: 1;
+  background: #fff;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #1a6eb5;
+  line-height: 1;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.75rem;
+  color: #8e9eb5;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Features ── */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 4rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #e3e8ef;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.featureItem:hover {
+  box-shadow: 0 6px 20px rgba(28, 37, 51, 0.08);
+  transform: translateY(-2px);
+}
+
+.featureIcon {
+  width: 44px;
+  height: 44px;
+  background: #e8f1fb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a6eb5;
+  flex-shrink: 0;
+}
+
+.featureTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #1c2533;
+}
+
+.featureDesc {
+  font-size: 0.8125rem;
+  color: #8e9eb5;
+  margin-top: 0.15rem;
+}
+
+/* ── Doctors Section ── */
+.doctorsSection {
+  max-width: 1100px;
+  margin: 4rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.sectionHead {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #1c2533;
+  margin-bottom: 0.4rem;
+}
+
+.sectionSub {
+  font-size: 0.9375rem;
+  color: #8e9eb5;
+}
+
+.doctorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Doctor Card ── */
+.docCard {
+  background: #fff;
+  border: 1px solid #e3e8ef;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.docCard:hover {
+  border-color: #1a6eb5;
+  box-shadow: 0 8px 28px rgba(26, 110, 181, 0.12);
+  transform: translateY(-4px);
+}
+
+.docCardDisabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.docCardDisabled:hover {
+  border-color: #e3e8ef;
+  box-shadow: none;
+  transform: none;
+}
+
+.docCardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.docAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1a6eb5, #0f9d82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.docMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.docName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1c2533;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docSpecialty {
+  font-size: 0.8125rem;
+  color: #8e9eb5;
+  margin-top: 0.15rem;
+}
+
+/* Availability badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.badgeGreen {
+  background: #eafaf4;
+  color: #22a06b;
+}
+
+.badgeRed {
+  background: #fdecea;
+  color: #d9303e;
+}
+
+.badgePulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.badgeRed .badgePulse {
+  animation: none;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: #f0f3f7;
+  margin: 1.25rem 0;
+}
+
+/* Pricing */
+.pricing {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  background: #f8fafc;
+  border-radius: 0.875rem;
+  overflow: hidden;
+  border: 1px solid #e8edf3;
+}
+
+.priceBox {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  text-align: center;
+}
+
+.priceSep {
+  width: 1px;
+  height: 40px;
+  background: #e3e8ef;
+  flex-shrink: 0;
+}
+
+.priceLabel {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #8e9eb5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.priceAmount {
+  font-size: 1.375rem;
+  font-weight: 900;
+  color: #1c2533;
+}
+
+.priceAmount small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8e9eb5;
+}
+
+/* Book button */
+.bookBtn {
+  width: 100%;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.bookBtnActive {
+  background: linear-gradient(135deg, #1a6eb5, #0f9d82);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(26, 110, 181, 0.25);
+}
+
+.bookBtnActive:hover {
+  box-shadow: 0 8px 22px rgba(26, 110, 181, 0.35);
+  transform: translateY(-1px);
+}
+
+.bookBtnActive:active {
+  transform: scale(0.98);
+}
+
+.bookBtnDisabled {
+  background: #f0f3f7;
+  color: #b0bec8;
+  cursor: not-allowed;
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 5rem auto 0;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid #e3e8ef;
+}
+
+.footerCopy {
+  font-size: 0.8125rem;
+  color: #8e9eb5;
+}
+
+.footerStaff {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #8e9eb5;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerStaff:hover {
+  color: #1a6eb5;
+}
+
+/* ── Loading ── */
+.loadingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background: #f8fafc;
+  font-family: "Cairo", sans-serif;
+}
+
+.spinnerRing {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e3e8ef;
+  border-top-color: #1a6eb5;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+.loadingText {
+  font-size: 0.9375rem;
+  color: #8e9eb5;
+  font-weight: 600;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1rem 5rem;
+  }
+  .statsRow {
+    margin: -1.5rem 1rem 0;
+  }
+  .features {
+    gap: 1rem;
+  }
+  .featureItem {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .doctorsGrid {
+    grid-template-columns: 1fr;
+  }
+  .footer {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  .statsRow {
+    flex-direction: column;
+    gap: 0;
+    border-radius: 1rem;
+  }
+  .statCard:not(:last-child) {
+    border-bottom: 1px solid #e3e8ef;
+  }
+}
