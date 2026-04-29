@@ -349,4 +349,55 @@ export const api = {
       },
     };
   },
+
+  createDoctor: async ({ name, specialty, prices, avatarInitials, available }) => {
+    await delay(500);
+    const id = `doc_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+    const doctor = {
+      id,
+      name,
+      specialty,
+      available: available ?? true,
+      sessionActive: false,
+      prices: { kashf: prices.kashf, istishara: prices.istishara },
+      avatarInitials,
+    };
+    _state.doctors.push(doctor);
+    _state.queues[id] = { currentNumber: 0, nextTicketNumber: 1, tickets: [] };
+    _state.financials[id] = {
+      daily:   { kashf: 0, istishara: 0 },
+      monthly: { kashf: 0, istishara: 0 },
+    };
+    persist();
+    return JSON.parse(JSON.stringify(doctor));
+  },
+
+  updateDoctor: async (id, data) => {
+    await delay(400);
+    const doctor = getDoctorById(id);
+    if (!doctor) throw new Error('الطبيب غير موجود');
+    const allowed = ['name', 'specialty', 'prices', 'avatarInitials', 'available'];
+    allowed.forEach((key) => {
+      if (data[key] !== undefined) {
+        if (key === 'prices') {
+          doctor.prices = { ...doctor.prices, ...data.prices };
+        } else {
+          doctor[key] = data[key];
+        }
+      }
+    });
+    persist();
+    return JSON.parse(JSON.stringify(doctor));
+  },
+
+  deleteDoctor: async (id) => {
+    await delay(400);
+    const idx = _state.doctors.findIndex((d) => d.id === id);
+    if (idx === -1) throw new Error('الطبيب غير موجود');
+    _state.doctors.splice(idx, 1);
+    delete _state.queues[id];
+    delete _state.financials[id];
+    persist();
+    return { success: true };
+  },
 };

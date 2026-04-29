@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu } from 'lucide-react';
 import s from './DashboardHeader.module.css';
 
-const DashboardHeader = ({ doctor, onMenuToggle }) => {
+const DashboardHeader = ({ doctor, onMenuToggle, activeView }) => {
   return (
     <header className={s.header}>
       <div className={s.start}>
@@ -10,8 +10,12 @@ const DashboardHeader = ({ doctor, onMenuToggle }) => {
           <Menu size={22} />
         </button>
         <div>
-          <h1 className={s.title}>لوحة التحكم</h1>
-          <p className={s.sub}>إدارة الطابور والجلسة</p>
+          <h1 className={s.title}>
+            {activeView === 'doctors' ? 'إدارة الأطباء' : 'لوحة التحكم'}
+          </h1>
+          <p className={s.sub}>
+            {activeView === 'doctors' ? 'إضافة، تعديل، وحذف الأطباء' : 'إدارة الطابور والجلسة'}
+          </p>
         </div>
       </div>
 

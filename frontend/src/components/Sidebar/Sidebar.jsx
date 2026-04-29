@@ -2,19 +2,20 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Hospital, LayoutDashboard, Users, BarChart3, Settings,
-  LogOut, ChevronDown, X,
+  LogOut, ChevronDown, X, Stethoscope,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import s from './Sidebar.module.css';
 
 const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: 'لوحة التحكم', active: true },
-  { icon: Users,           label: 'المرضى',       disabled: true },
-  { icon: BarChart3,       label: 'التقارير',      disabled: true },
-  { icon: Settings,        label: 'الإعدادات',     disabled: true },
+  { key: 'queue',    icon: LayoutDashboard, label: 'لوحة التحكم' },
+  { key: 'doctors',  icon: Stethoscope,     label: 'إدارة الأطباء' },
+  { key: 'patients', icon: Users,           label: 'المرضى',       disabled: true },
+  { key: 'reports',  icon: BarChart3,       label: 'التقارير',      disabled: true },
+  { key: 'settings', icon: Settings,        label: 'الإعدادات',     disabled: true },
 ];
 
-const Sidebar = ({ doctors, selectedId, onSelectDoctor, isOpen, onClose }) => {
+const Sidebar = ({ doctors, selectedId, onSelectDoctor, isOpen, onClose, activeView, onViewChange }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -49,9 +50,10 @@ const Sidebar = ({ doctors, selectedId, onSelectDoctor, isOpen, onClose }) => {
         <nav className={s.nav}>
           {NAV_ITEMS.map((item) => (
             <button
-              key={item.label}
-              className={`${s.navItem} ${item.active ? s.navItemActive : ''} ${item.disabled ? s.navItemDisabled : ''}`}
+              key={item.key}
+              className={`${s.navItem} ${activeView === item.key ? s.navItemActive : ''} ${item.disabled ? s.navItemDisabled : ''}`}
               disabled={item.disabled}
+              onClick={() => !item.disabled && onViewChange(item.key)}
             >
               <item.icon size={18} />
               <span>{item.label}</span>
@@ -60,33 +62,34 @@ const Sidebar = ({ doctors, selectedId, onSelectDoctor, isOpen, onClose }) => {
           ))}
         </nav>
 
-        {/* Doctor selector */}
-        <div className={s.doctorSection}>
-          <div className={s.sectionLabel}>الطبيب / العيادة</div>
-          {selectedDoctor && (
-            <div className={s.doctorPreview}>
-              <div className={s.doctorAvatar}>{selectedDoctor.avatarInitials}</div>
-              <div className={s.doctorInfo}>
-                <div className={s.doctorName}>{selectedDoctor.name}</div>
-                <div className={s.doctorSpec}>{selectedDoctor.specialty}</div>
+        {activeView !== 'doctors' && (
+          <div className={s.doctorSection}>
+            <div className={s.sectionLabel}>الطبيب / العيادة</div>
+            {selectedDoctor && (
+              <div className={s.doctorPreview}>
+                <div className={s.doctorAvatar}>{selectedDoctor.avatarInitials}</div>
+                <div className={s.doctorInfo}>
+                  <div className={s.doctorName}>{selectedDoctor.name}</div>
+                  <div className={s.doctorSpec}>{selectedDoctor.specialty}</div>
+                </div>
               </div>
+            )}
+            <div className={s.selectWrapper}>
+              <select
+                value={selectedId}
+                onChange={(e) => onSelectDoctor(e.target.value)}
+                className={s.select}
+              >
+                {doctors.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={16} className={s.selectIcon} />
             </div>
-          )}
-          <div className={s.selectWrapper}>
-            <select
-              value={selectedId}
-              onChange={(e) => onSelectDoctor(e.target.value)}
-              className={s.select}
-            >
-              {doctors.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={16} className={s.selectIcon} />
           </div>
-        </div>
+        )}
 
         {/* Logout */}
         <div className={s.bottom}>

@@ -18,6 +18,7 @@ import StatsCard from "../components/Stats/StatsCard";
 import DailyChart from "../components/DailyChart/DailyChart";
 import PatientsSection from "../components/PatientsSection/PatientsSection";
 import WalkInModal from "../components/WalkInModal/WalkInModal";
+import DoctorManagement from "../components/DoctorManagement/DoctorManagement";
 import s from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -30,6 +31,7 @@ const Dashboard = () => {
   const [calling, setCalling] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [activeView, setActiveView] = useState('queue');
   const [showWalkIn, setShowWalkIn] = useState(false);
   const [wiLoading, setWiLoading] = useState(false);
 
@@ -43,6 +45,14 @@ const Dashboard = () => {
     setQueue(q);
     setStats(st);
     setDoctor(d);
+  };
+
+  const refreshDoctors = async () => {
+    const data = await api.getDoctors();
+    setDoctors(data);
+    if (!data.find((d) => d.id === selectedId)) {
+      setSelectedId(data.length ? data[0].id : '');
+    }
   };
 
   useEffect(() => {
@@ -107,118 +117,129 @@ const Dashboard = () => {
         onSelectDoctor={setSelectedId}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        activeView={activeView}
+        onViewChange={setActiveView}
       />
 
       <div className={s.main}>
         <DashboardHeader
-          doctor={doctor}
+          doctor={activeView === 'queue' ? doctor : null}
           onMenuToggle={() => setSidebarOpen(true)}
+          activeView={activeView}
         />
 
         <div className={s.content}>
-          {loading && (
-            <div className="loading-page">
-              <div className="spinner" />
-            </div>
-          )}
-
-          {/* ── Doctors panel — always visible once doctors load ── */}
-          {doctors.length > 0 && (
-            <DoctorPanel
-              doctors={doctors}
-              selectedId={selectedId}
-              onSelect={setSelectedId}
-              queue={queue}
-              stats={stats}
-            />
-          )}
-
-          {!loading && doctor && (
+          {activeView === 'queue' && (
             <>
-              <SessionControls
-                doctor={doctor}
-                onToggleSession={handleToggleSession}
-                onToggleAvailable={handleToggleAvailable}
-              />
+              {loading && (
+                <div className="loading-page">
+                  <div className="spinner" />
+                </div>
+              )}
 
-              <CurrentServing
-                currentNumber={queue?.currentNumber ?? 0}
-                waitingCount={queue?.waitingCount ?? 0}
-                totalToday={stats?.patients?.totalToday ?? 0}
-                doneToday={stats?.patients?.doneToday ?? 0}
-                sessionActive={doctor.sessionActive}
-                calling={calling}
-                onCallNext={handleNext}
-              />
+              {doctors.length > 0 && (
+                <DoctorPanel
+                  doctors={doctors}
+                  selectedId={selectedId}
+                  onSelect={setSelectedId}
+                  queue={queue}
+                  stats={stats}
+                />
+              )}
 
-              {stats && (
-                <section className={s.sectionCard}>
-                  <div className={s.sectionHeader}>
-                    <h2 className={s.sectionTitle}>
-                      <BarChart3 size={20} />
-                      الإحصائيات
-                    </h2>
-                  </div>
+              {!loading && doctor && (
+                <>
+                  <SessionControls
+                    doctor={doctor}
+                    onToggleSession={handleToggleSession}
+                    onToggleAvailable={handleToggleAvailable}
+                  />
 
-                  {/* ── Revenue group ── */}
-                  <div className={s.statsGroup}>
-                    <div className={s.statsGroupLabel}>
-                      <Wallet size={13} />
-                      الإيرادات
-                    </div>
-                    <div className={s.statsRow4}>
-                      <StatsCard
-                        icon={<Wallet size={20} />}
-                        label="إيراد اليوم الكلي"
-                        value={stats.daily.total}
-                        unit="ج"
-                        accentColor="var(--clr-primary)"
-                      />
-                      <StatsCard
-                        icon={<Stethoscope size={20} />}
-                        label="كشف اليوم"
-                        value={stats.daily.kashf}
-                        unit="ج"
-                        accentColor="var(--clr-secondary)"
-                      />
-                      <StatsCard
-                        icon={<MessageSquare size={20} />}
-                        label="استشارة اليوم"
-                        value={stats.daily.istishara}
-                        unit="ج"
-                        accentColor="var(--clr-warning)"
-                      />
-                      <StatsCard
-                        icon={<Calendar size={20} />}
-                        label="إيراد الشهر"
-                        value={stats.monthly.total}
-                        unit="ج"
-                        accentColor="var(--clr-success)"
-                      />
-                    </div>
-                    <DailyChart
-                      kashf={stats.daily.kashf}
-                      istishara={stats.daily.istishara}
-                    />
-                  </div>
+                  <CurrentServing
+                    currentNumber={queue?.currentNumber ?? 0}
+                    waitingCount={queue?.waitingCount ?? 0}
+                    totalToday={stats?.patients?.totalToday ?? 0}
+                    doneToday={stats?.patients?.doneToday ?? 0}
+                    sessionActive={doctor.sessionActive}
+                    calling={calling}
+                    onCallNext={handleNext}
+                  />
 
-                  {/* ── Patients group ── */}
-                  <div className={s.statsGroup}>
-                    <div className={s.statsGroupLabel}>
-                      <Users size={13} />
-                      المرضى
-                    </div>
-                    <PatientsSection
-                      stats={stats}
-                      tickets={queue?.tickets ?? []}
-                      currentNumber={queue?.currentNumber ?? 0}
-                      onAction={handleTicketAction}
-                      onAddWalkIn={() => setShowWalkIn(true)}
-                    />
-                  </div>
-                </section>
+                  {stats && (
+                    <section className={s.sectionCard}>
+                      <div className={s.sectionHeader}>
+                        <h2 className={s.sectionTitle}>
+                          <BarChart3 size={20} />
+                          الإحصائيات
+                        </h2>
+                      </div>
+
+                      <div className={s.statsGroup}>
+                        <div className={s.statsGroupLabel}>
+                          <Wallet size={13} />
+                          الإيرادات
+                        </div>
+                        <div className={s.statsRow4}>
+                          <StatsCard
+                            icon={<Wallet size={20} />}
+                            label="إيراد اليوم الكلي"
+                            value={stats.daily.total}
+                            unit="ج"
+                            accentColor="var(--clr-primary)"
+                          />
+                          <StatsCard
+                            icon={<Stethoscope size={20} />}
+                            label="كشف اليوم"
+                            value={stats.daily.kashf}
+                            unit="ج"
+                            accentColor="var(--clr-secondary)"
+                          />
+                          <StatsCard
+                            icon={<MessageSquare size={20} />}
+                            label="استشارة اليوم"
+                            value={stats.daily.istishara}
+                            unit="ج"
+                            accentColor="var(--clr-warning)"
+                          />
+                          <StatsCard
+                            icon={<Calendar size={20} />}
+                            label="إيراد الشهر"
+                            value={stats.monthly.total}
+                            unit="ج"
+                            accentColor="var(--clr-success)"
+                          />
+                        </div>
+                        <DailyChart
+                          kashf={stats.daily.kashf}
+                          istishara={stats.daily.istishara}
+                        />
+                      </div>
+
+                      <div className={s.statsGroup}>
+                        <div className={s.statsGroupLabel}>
+                          <Users size={13} />
+                          المرضى
+                        </div>
+                        <PatientsSection
+                          stats={stats}
+                          tickets={queue?.tickets ?? []}
+                          currentNumber={queue?.currentNumber ?? 0}
+                          onAction={handleTicketAction}
+                          onAddWalkIn={() => setShowWalkIn(true)}
+                        />
+                      </div>
+                    </section>
+                  )}
+                </>
               )}
             </>
+          )}
+
+          {activeView === 'doctors' && (
+            <DoctorManagement
+              doctors={doctors}
+              onDoctorsChange={refreshDoctors}
+            />
           )}
         </div>
       </div>
